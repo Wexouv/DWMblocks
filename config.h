@@ -4,6 +4,7 @@ static const Block blocks[] = {
     {"", "clock",    1,  0},
     {"", "net_name", 60, 0},
     {"", "netspeed", 3,  0},
+    {"", "mem",      5, 0},
     {"", "cpu_temp", 5,  0},
     {"", "battery",  300,0},
 };
