@@ -1,0 +1,6 @@
+#!/bin/sh
+# Get current keyboard layout
+# Alternative: https://gitlab.com/GasparVardanyan/utilsbin/-/blob/master/kbd
+
+# setxkbmap -print | awk -F"+" '/xkb_symbols/ {print $2}'
+xkblayout
