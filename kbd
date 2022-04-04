@@ -1,0 +1,46 @@
+#!/bin/sh
+
+layouts=( 'us' 'ru(phonetic)' )
+
+mkdir -p ~/.local/tmp
+
+setlayout ()
+{
+	echo "$@" > ~/.local/tmp/kbd
+	setxkbmap -layout "$@" -option grp:alt_shift_toggle &
+}
+
+if ! [ -f ~/.local/tmp/kbd ]
+then
+	setlayout "${layouts[0]}"
+fi
+
+getlayout ()
+{
+	cat ~/.local/tmp/kbd | sed "s/([^)]*)//g"
+}
+
+toggle ()
+{
+	current="$(cat ~/.local/tmp/kbd)"
+
+	found=0
+	for l in ${layouts[@]} ${layouts[0]}
+	do
+		if [[ "$l" == "$current" ]]
+		then
+			found=1
+			continue
+		fi
+		if [[ $found == 1 ]]
+		then
+			setlayout $l
+			break
+		fi
+	done
+
+	herbe "Keyboard layout: $(getlayout | tr '[:lower:]' '[:upper:]')" &
+}
+
+[[ $1 == get ]] && getlayout
+[[ $1 == toggle ]] && toggle
